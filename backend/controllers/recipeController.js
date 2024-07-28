@@ -1,11 +1,12 @@
 // backend/controllers/recipeController.js
-const Recipe = require('../models/Recipe');
+const RecipeModel = require('../models/recipeModel');
 const { body, validationResult } = require('express-validator');
 
 const RecipeController = {
     getRecipes: async function (req, res) {
         try {
-            const recipes = await Recipe.find();
+            const recipes = await RecipeModel.find();
+            console.log('Get Recipes : ' , recipes);
             res.json(recipes);
         } catch (error) {
             res.status(500).send('Server Error');
@@ -22,8 +23,9 @@ const RecipeController = {
             return res.status(400).json({ errors: errors.array() });
           }
           try {
-            const newRecipe = new Recipe(req.body);
+            const newRecipe = new RecipeModel(req.body);
             const recipe = await newRecipe.save();
+            console.log('Add Recipe : ' , newRecipe);
             res.json(recipe);
           } catch (error) {
             res.status(500).send('Server Error');
