@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipes } from '../features/recipes/recipesSlice';
 import Recipe from './Recipe';
+import { Link } from 'react-router-dom';
 
 const RecipeList = () => {
   const dispatch = useDispatch();
@@ -26,6 +27,7 @@ const RecipeList = () => {
 
   return (
     <div>
+      <Link to="/add-recipe">Add a new Recipe</Link>
       {recipes.map((recipe) => (
         <Recipe key={recipe._id} recipe={recipe} />
       ))}
