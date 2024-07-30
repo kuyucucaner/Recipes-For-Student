@@ -1,7 +1,7 @@
-// backend/routes/recipeRoutes.js
 const express = require('express');
 const router = express.Router();
 const RecipeController = require('../controllers/recipeController');
+const { protect } = require('../middleware/authMiddleware');
 
 /**
  * @swagger
@@ -113,8 +113,54 @@ const RecipeController = require('../controllers/recipeController');
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/RecipeModel'
+ * /api/recipes/{id}:
+ *   put:
+ *     summary: Update an existing recipe
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Recipe ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RecipeModel'
+ *     responses:
+ *       200:
+ *         description: Recipe updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/RecipeModel'
+ *       404:
+ *         description: Recipe not found
+ *   delete:
+ *     summary: Delete an existing recipe
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Recipe ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Recipe deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/RecipeModel'
+ *       404:
+ *         description: Recipe not found
  */
+
 router.get('/', RecipeController.getRecipes);
-router.post('/', RecipeController.addRecipe);
+router.post('/', protect, RecipeController.addRecipe);
+router.put('/:id', protect, RecipeController.updateRecipe);
+router.delete('/:id', protect, RecipeController.deleteRecipe);
 
 module.exports = router;

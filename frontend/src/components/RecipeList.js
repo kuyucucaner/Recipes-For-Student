@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipes } from '../features/recipes/recipesSlice';
 import Recipe from './Recipe';
-import { Link } from 'react-router-dom';
+import '../styles/recipe-list.css'; // Stil dosyasını import edin
 
 const RecipeList = () => {
   const dispatch = useDispatch();
@@ -26,8 +26,7 @@ const RecipeList = () => {
   }
 
   return (
-    <div>
-      <Link to="/add-recipe">Add a new Recipe</Link>
+    <div className='recipe-list-container'>
       {recipes.map((recipe) => (
         <Recipe key={recipe._id} recipe={recipe} />
       ))}
