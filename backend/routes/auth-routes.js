@@ -1,7 +1,7 @@
 // backend/routes/authRoutes.js
 const express = require('express');
 const router = express.Router();
-const { registerUser, authUser } = require('../controllers/authController');
+const AuthController = require('../controllers/auth-controller');
 
 /**
  * @swagger
@@ -54,7 +54,7 @@ const { registerUser, authUser } = require('../controllers/authController');
  *       500:
  *         description: Server error
  */
-router.post('/register', registerUser);
+router.post('/register', AuthController.registerUser);
 
 /**
  * @swagger
@@ -99,6 +99,6 @@ router.post('/register', registerUser);
  *       500:
  *         description: Server error
  */
-router.post('/login', authUser);
+router.post('/login', AuthController.authUser);
 
 module.exports = router;

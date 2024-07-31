@@ -1,4 +1,4 @@
-const RecipeModel = require('../models/recipeModel');
+const RecipeModel = require('../models/recipe-model');
 const { body, validationResult } = require('express-validator');
 
 const RecipeController = {

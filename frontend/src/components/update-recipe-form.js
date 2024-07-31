@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateRecipe } from '../features/recipes/recipesSlice';
+import { updateRecipe } from '../features/recipes/recipes-slice';
 import '../styles/update-recipe-form.css'; // Stil dosyasını import edin
 
 const UpdateRecipeForm = ({ recipe }) => {

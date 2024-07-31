@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { registerUser } from '../features/auth/authSlice';
+import { registerUser } from '../features/auth/auth-slice';
 
 const Register = () => {
   const [formData, setFormData] = useState({

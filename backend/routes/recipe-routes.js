@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const RecipeController = require('../controllers/recipeController');
-const { protect } = require('../middleware/authMiddleware');
+const RecipeController = require('../controllers/recipe-controller');
+const { protect } = require('../middleware/auth-middleware');
 
 /**
  * @swagger
@@ -86,9 +86,21 @@ const { protect } = require('../middleware/authMiddleware');
  *         rating:
  *           type: number
  *           format: float
+ */
+
+/**
+ * @swagger
+ * tags:
+ *   name: Recipe
+ *   description: Recipe management
+ */
+
+/**
+ * @swagger
  * /api/recipes:
  *   get:
  *     summary: Retrieve a list of recipes
+ *     tags: [Recipe]
  *     responses:
  *       200:
  *         description: A list of recipes
@@ -100,6 +112,7 @@ const { protect } = require('../middleware/authMiddleware');
  *                 $ref: '#/components/schemas/RecipeModel'
  *   post:
  *     summary: Create a new recipe
+ *     tags: [Recipe]
  *     requestBody:
  *       required: true
  *       content:
@@ -113,9 +126,14 @@ const { protect } = require('../middleware/authMiddleware');
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/RecipeModel'
+ */
+
+/**
+ * @swagger
  * /api/recipes/{id}:
  *   put:
  *     summary: Update an existing recipe
+ *     tags: [Recipe]
  *     parameters:
  *       - in: path
  *         name: id
@@ -140,6 +158,7 @@ const { protect } = require('../middleware/authMiddleware');
  *         description: Recipe not found
  *   delete:
  *     summary: Delete an existing recipe
+ *     tags: [Recipe]
  *     parameters:
  *       - in: path
  *         name: id

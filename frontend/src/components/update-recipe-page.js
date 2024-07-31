@@ -2,7 +2,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import UpdateRecipeForm from './UpdateRecipeForm';
+import UpdateRecipeForm from './update-recipe-form';
 import '../styles/update-recipe-page.css'; // Stil dosyasını import edin
 
 const UpdateRecipePage = () => {

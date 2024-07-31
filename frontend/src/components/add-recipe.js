@@ -1,7 +1,7 @@
 // recipe-app/frontend/src/components/AddRecipe.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addRecipe } from "../features/recipes/recipesSlice";
+import { addRecipe } from "../features/recipes/recipes-slice";
 import "../styles/add-recipe.css"; // Stil dosyasını import edin
 
 const AddRecipe = () => {

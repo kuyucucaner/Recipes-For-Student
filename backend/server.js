@@ -5,8 +5,8 @@ const cors = require('cors');
 const helmet = require('helmet');
 const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
-const recipeRoutes = require('./routes/recipeRoutes');
-const authRoutes = require('./routes/authRoutes');
+const recipeRoutes = require('./routes/recipe-routes');
+const authRoutes = require('./routes/auth-routes');
 require('dotenv').config();
 
 const app = express();

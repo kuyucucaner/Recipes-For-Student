@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { deleteRecipe } from '../features/recipes/recipesSlice';
+import { deleteRecipe } from '../features/recipes/recipes-slice';
 import '../styles/recipe.css'; // Stil dosyasını import edin
 
 const Recipe = ({ recipe }) => {

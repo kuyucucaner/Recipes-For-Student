@@ -1,8 +1,8 @@
 // recipe-app/frontend/src/components/RecipeList.js
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRecipes } from '../features/recipes/recipesSlice';
-import Recipe from './Recipe';
+import { fetchRecipes } from '../features/recipes/recipes-slice';
+import Recipe from './recipe';
 import '../styles/recipe-list.css'; // Stil dosyasını import edin
 
 const RecipeList = () => {

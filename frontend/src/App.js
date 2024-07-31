@@ -2,13 +2,13 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './styles/styles.css';
-import Navbar from './components/Navbar';
-import Register from './components/Register';
-import Login from './components/Login';
+import Navbar from './components/navbar';
+import Register from './components/register';
+import Login from './components/login';
 
-const RecipeList = lazy(() => import('./components/RecipeList'));
-const AddRecipe = lazy(() => import('./components/AddRecipe'));
-const UpdateRecipePage = lazy(() => import('./components/UpdateRecipePage'));
+const RecipeList = lazy(() => import('./components/recipe-list'));
+const AddRecipe = lazy(() => import('./components/add-recipe'));
+const UpdateRecipePage = lazy(() => import('./components/update-recipe-page'));
 
 const App = () => {
   return (
