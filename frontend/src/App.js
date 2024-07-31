@@ -5,6 +5,7 @@ import './styles/styles.css';
 import Navbar from './components/navbar';
 import Register from './components/register';
 import Login from './components/login';
+import Home from './components/home';
 
 const RecipeList = lazy(() => import('./components/recipe-list'));
 const AddRecipe = lazy(() => import('./components/add-recipe'));
@@ -18,7 +19,8 @@ const App = () => {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<RecipeList />} />
+          <Route path="/" element={<Home />}/>
+          <Route path="/recipe-list" element={<RecipeList />} />
           <Route path="/add-recipe" element={<AddRecipe />} />
           <Route path="/update-recipe/:id" element={<UpdateRecipePage />} />
         </Routes>

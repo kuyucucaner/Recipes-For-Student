@@ -4,6 +4,7 @@ import App from './App';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
+import 'toastr/build/toastr.min.css';
 
 // Create a root element
 const root = ReactDOM.createRoot(document.getElementById('root'));

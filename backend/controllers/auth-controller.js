@@ -8,7 +8,7 @@ const generateToken = (id) => {
 
 const AuthController ={
   registerUser : async function (req , res)  {
-    const { username, email, password } = req.body;
+    const { username, email, password , role } = req.body;
 
     try {
       const userExists = await User.findOne({ email });
@@ -21,6 +21,7 @@ const AuthController ={
         username,
         email,
         password,
+        role
       });
   
       if (user) {
@@ -28,6 +29,7 @@ const AuthController ={
           _id: user._id,
           username: user.username,
           email: user.email,
+          role: user.role,
           token: generateToken(user._id),
         });
       } else {
@@ -47,6 +49,7 @@ const AuthController ={
           _id: user._id,
           username: user.username,
           email: user.email,
+          role:role.user,
           token: generateToken(user._id),
         });
       } else {
