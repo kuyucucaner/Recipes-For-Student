@@ -6,6 +6,7 @@ import Navbar from './components/navbar';
 import Register from './components/register';
 import Login from './components/login';
 import Home from './components/home';
+import ProtectedRoute from './components/protected-route';
 
 const RecipeList = lazy(() => import('./components/recipe-list'));
 const AddRecipe = lazy(() => import('./components/add-recipe'));
@@ -21,7 +22,9 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Home />}/>
           <Route path="/recipe-list" element={<RecipeList />} />
-          <Route path="/add-recipe" element={<AddRecipe />} />
+          <Route element={<ProtectedRoute allowedRoles={[2, 0]} />}>
+            <Route path="/add-recipe" element={<AddRecipe />} />
+          </Route>
           <Route path="/update-recipe/:id" element={<UpdateRecipePage />} />
         </Routes>
       </Suspense>

@@ -9,12 +9,17 @@ const recipeRoutes = require('./routes/recipe-routes');
 const authRoutes = require('./routes/auth-routes');
 require('dotenv').config();
 
+
 const app = express();
 // Middleware
 app.use(express.json());
-app.use(cors());
 app.use(helmet());
+const corsOptions = {
+  origin: 'http://localhost:3000', // Frontend uygulamanızın URL'si
+  credentials: true, // Cookie ve diğer kimlik bilgilerini desteklemek için
+};
 
+app.use(cors(corsOptions));
 // Swagger Setup
 const swaggerOptions = {
   swaggerDefinition: {

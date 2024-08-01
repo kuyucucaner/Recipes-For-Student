@@ -4,6 +4,8 @@ import { loginUser } from '../features/auth/auth-slice';
 import '../styles/login.css'
 import toastr from 'toastr';
 import { useNavigate } from 'react-router-dom';  
+
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -21,15 +23,17 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      dispatch(loginUser({ email, password }));
+      await dispatch(loginUser({ email, password })).unwrap();
       toastr.success('Login successful!', 'Success');
       setTimeout(() => {
         navigate('/');  // Redirect to the desired route
+        window.location.reload(); // Reload the page
       }, 2000); // 2 seconds delay
     } catch (error) {
       toastr.error('Login failed. Please try again.', 'Error');
       setTimeout(() => {
         navigate('/login');  // Redirect to the desired route
+        window.location.reload(); // Reload the page
       }, 2000); // 2 seconds delay
     }
   };
