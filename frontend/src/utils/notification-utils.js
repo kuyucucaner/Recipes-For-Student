@@ -1,4 +1,5 @@
 // src/utils/notificationUtils.js
+//web notifications
 export const requestNotificationPermission = () => {
   console.log('Checking notification permission...');
   if (Notification.permission === 'default') {
@@ -15,11 +16,17 @@ export const requestNotificationPermission = () => {
   }
 };
 
-export const sendNotification = (title, options) => {
+export const sendNotification = (title, options, url) => {
   console.log('Attempting to send notification...');
   if (Notification.permission === 'granted') {
     console.log('Permission granted. Sending notification...');
-    new Notification(title, options);
+    
+    const notification = new Notification(title, options);
+    
+    notification.onclick = () => {
+      window.open(url, '_blank');
+    };
+    
     console.log('Notification sent:', title, options);
   } else {
     console.log('Notification permission is not granted.');

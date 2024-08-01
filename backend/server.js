@@ -7,6 +7,7 @@ const swaggerJsDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const recipeRoutes = require('./routes/recipe-routes');
 const authRoutes = require('./routes/auth-routes');
+const mailRoutes = require('./routes/mail-routes');
 require('dotenv').config();
 
 
@@ -44,6 +45,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 // Routes
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/users', authRoutes);
+app.use('/api/mails', mailRoutes);
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

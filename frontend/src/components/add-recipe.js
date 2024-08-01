@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addRecipe } from "../features/recipes/recipes-slice";
 import "../styles/add-recipe.css"; // Stil dosyasını import edin
-import { notifyNewRecipe } from '../services/notification-service';
+import { notifyNewRecipe , notifyUserByEmail } from '../services/notification-service';
 
 const AddRecipe = () => {
   const [title, setTitle] = useState("");
@@ -49,6 +49,7 @@ const AddRecipe = () => {
     };
     dispatch(addRecipe(newRecipe));
     notifyNewRecipe(title);  // Bildirim gönderme
+    notifyUserByEmail(title);  // Bildirim gönderme
     // Tüm alanları temizleme
     setTitle("");
     setIngredients("");
