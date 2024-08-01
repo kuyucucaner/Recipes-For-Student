@@ -23,7 +23,7 @@ const ProtectedRoute = ({ allowedRoles }) => {
     } else {
      toastr.error('Access Denied!', 'Error');
       // Kullanıcı role uygun değilse erişim reddi mesajı göster
-      return <Navigate to="/login" />;
+      return <Navigate to="/" />;
     }
   } catch (error) {
     console.error('Error decoding token:', error);

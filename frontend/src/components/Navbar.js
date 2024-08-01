@@ -1,12 +1,14 @@
 // src/components/Navbar.js
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/navbar.css';
 import { jwtDecode } from 'jwt-decode';
 import Cookies from 'js-cookie';
+import toastr from 'toastr';
 
 const Navbar = () => {
   const [role, setRole] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const fetchUserRole = () => {
@@ -24,7 +26,15 @@ const Navbar = () => {
     fetchUserRole();
   }, []);
 
-  console.log('Role:', role);
+  const handleLogout = () => {
+    toastr.success('Logout successful!', 'Success');
+    setTimeout(() => {
+      Cookies.remove('token'); // Remove token from cookies
+      setRole(null); // Clear role from state
+      navigate('/');  // Redirect to the desired route
+      window.location.reload(); // Reload the page
+    }, 1000); // 2 seconds delay
+  };
 
   return (
     <nav className="navbar-container">
@@ -33,8 +43,14 @@ const Navbar = () => {
       {(role === 0 || role === 2) && (
         <h4 className='navbar-link'><Link className='navbar-link-direction' to="/add-recipe">Add Recipe</Link></h4>
       )}
-      <h4 className='navbar-link'><Link className='navbar-link-direction' to="/login">Login</Link></h4>
-      <h4 className='navbar-link'><Link className='navbar-link-direction' to="/register">Register</Link></h4>
+       {role !== null ? (
+        <button className='navbar-button' onClick={handleLogout}>Logout</button>
+      ) : (
+        <>
+          <h4 className='navbar-link'><Link className='navbar-link-direction' to="/login">Login</Link></h4>
+          <h4 className='navbar-link'><Link className='navbar-link-direction' to="/register">Register</Link></h4>
+        </>
+      )}
     </nav>
   );
 };
