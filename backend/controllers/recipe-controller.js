@@ -2,12 +2,12 @@ const RecipeModel = require('../models/recipe-model');
 const { body, validationResult } = require('express-validator');
 
 const RecipeController = {
-  getRecipes: async function (req, res) {
+  getRecipes: async (req, res) => {
     try {
       const recipes = await RecipeModel.find();
-      console.log('Get Recipes : ', recipes);
       res.json(recipes);
     } catch (error) {
+      console.error('Server Error:', error.message); // Log detailed error message
       res.status(500).send('Server Error');
     }
   },
@@ -22,7 +22,7 @@ const RecipeController = {
         return res.status(400).json({ errors: errors.array() });
       }
       try {
-        const newRecipe = new RecipeModel({ ...req.body, user: req.user._id });
+        const newRecipe = new RecipeModel({ ...req.body });
         const recipe = await newRecipe.save();
         console.log('Add Recipe : ', newRecipe);
         res.json(recipe);
@@ -50,10 +50,6 @@ const RecipeController = {
           return res.status(404).json({ msg: 'Recipe not found' });
         }
 
-        if (recipe.user.toString() !== req.user._id.toString()) {
-          return res.status(401).json({ msg: 'User not authorized' });
-        }
-
         const updatedRecipe = await RecipeModel.findByIdAndUpdate(id, req.body, {
           new: true,
           runValidators: true,
@@ -70,24 +66,19 @@ const RecipeController = {
 
   deleteRecipe: async (req, res) => {
     try {
-      const recipe = await RecipeModel.findById(req.params.id);
-
-      if (!recipe) {
+      const result = await RecipeModel.findByIdAndDelete(req.params.id);
+  
+      if (!result) {
         return res.status(404).json({ msg: 'Recipe not found' });
       }
-
-      if (recipe.user.toString() !== req.user._id.toString()) {
-        return res.status(401).json({ msg: 'User not authorized' });
-      }
-
-      await recipe.remove();
-
+  
       res.json({ msg: 'Recipe removed' });
     } catch (error) {
       console.error('Server Error:', error.message); // Log detailed error message
       res.status(500).send('Server Error');
     }
   },
+  
 };
 
 module.exports = RecipeController;

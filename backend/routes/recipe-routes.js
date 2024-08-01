@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const RecipeController = require('../controllers/recipe-controller');
-const { protect } = require('../middleware/auth-middleware');
 
 /**
  * @swagger
@@ -178,8 +177,8 @@ const { protect } = require('../middleware/auth-middleware');
  */
 
 router.get('/', RecipeController.getRecipes);
-router.post('/', protect, RecipeController.addRecipe);
-router.put('/:id', protect, RecipeController.updateRecipe);
-router.delete('/:id', protect, RecipeController.deleteRecipe);
+router.post('/', RecipeController.addRecipe);
+router.put('/:id', RecipeController.updateRecipe);
+router.delete('/:id', RecipeController.deleteRecipe);
 
 module.exports = router;

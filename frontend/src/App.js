@@ -1,5 +1,5 @@
 // recipe-app/frontend/src/App.js
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy , useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './styles/styles.css';
 import Navbar from './components/navbar';
@@ -7,12 +7,16 @@ import Register from './components/register';
 import Login from './components/login';
 import Home from './components/home';
 import ProtectedRoute from './components/protected-route';
+import { requestNotificationPermission} from './utils/notification-utils';
 
 const RecipeList = lazy(() => import('./components/recipe-list'));
 const AddRecipe = lazy(() => import('./components/add-recipe'));
 const UpdateRecipePage = lazy(() => import('./components/update-recipe-page'));
 
 const App = () => {
+  useEffect(() => {
+    requestNotificationPermission();
+  }, []);
   return (
     <div className="App">
       <Navbar />
