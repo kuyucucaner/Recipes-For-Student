@@ -55,6 +55,7 @@ const AuthController = require('../controllers/auth-controller');
  *         description: Server error
  */
 router.post('/register', AuthController.registerUser);
+router.get('/verify/:token', AuthController.verifyEmail);
 
 /**
  * @swagger

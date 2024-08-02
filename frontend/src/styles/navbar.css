@@ -2,20 +2,29 @@
     background-color: #333;
     display: flex;
     flex-direction: row;
-  align-items: center;
-
+    justify-content: space-between;
+  }
+  .navbar-right-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
   }
 .navbar-logo{
  text-align: start;
  margin-right: auto;
+ font-size: 20px;
+ padding-left: 20px;
 }
 
 .navbar-link{
+  padding-right: 30px;
   margin-left: auto;
+  font-weight: lighter;  
+  font-size: 16px;
+
 }
 .navbar-link-direction{
   text-decoration: none;
   color: white;
-  font-size: 20px;
-  font-weight: bold;  
+
 }

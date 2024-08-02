@@ -38,7 +38,10 @@ const Navbar = () => {
 
   return (
     <nav className="navbar-container">
+      <div className='navbar-left-section'>
       <h4 className='navbar-logo'><Link className='navbar-link-direction' to="/">Recipes For Student</Link></h4>
+      </div>
+      <div className='navbar-right-section'>
       <h4 className='navbar-link'><Link className='navbar-link-direction' to="/recipe-list">List of Recipes</Link></h4>
       {(role === 0 || role === 2) && (
         <h4 className='navbar-link'><Link className='navbar-link-direction' to="/add-recipe">Add Recipe</Link></h4>
@@ -51,6 +54,7 @@ const Navbar = () => {
           <h4 className='navbar-link'><Link className='navbar-link-direction' to="/register">Register</Link></h4>
         </>
       )}
+      </div>
     </nav>
   );
 };
