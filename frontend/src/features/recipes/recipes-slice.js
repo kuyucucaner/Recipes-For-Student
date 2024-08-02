@@ -1,11 +1,22 @@
 // recipe-app/frontend/src/features/recipes/recipesSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-//getirme işlemi için async thunk
+// Getirme işlemi için async thunk (Tüm tarifler)
 export const fetchRecipes = createAsyncThunk('recipes/fetchRecipes', async () => {
   const response = await axios.get('http://localhost:5000/api/recipes');
   return response.data;
 });
+
+// Getirme işlemi için async thunk (Filtrelenmiş tarifler)
+export const fetchFilterRecipes = createAsyncThunk(
+  'recipes/fetchFilterRecipes',
+  async (filters) => {
+    const response = await axios.get('http://localhost:5000/api/recipes/filter', {
+      params: filters
+    });
+    return response.data;
+  }
+);
 // ekleme işlemi için async thunk
 export const addRecipe = createAsyncThunk('recipes/addRecipe', async (newRecipe) => {
   const response = await axios.post('http://localhost:5000/api/recipes', newRecipe);
@@ -52,6 +63,17 @@ const recipesSlice = createSlice({
       })
       .addCase(addRecipe.fulfilled, (state, action) => {
         state.recipes.push(action.payload);
+      })
+      .addCase(fetchFilterRecipes.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchFilterRecipes.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.recipes = action.payload;
+      })
+      .addCase(fetchFilterRecipes.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       })
       .addCase(updateRecipe.fulfilled, (state,action) =>{
         const updatedRecipe = action.payload;

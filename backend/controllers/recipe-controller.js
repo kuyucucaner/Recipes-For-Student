@@ -78,7 +78,42 @@ const RecipeController = {
       res.status(500).send('Server Error');
     }
   },
+  filterRecipes: async (req, res) => {
+    try {
+      const { search, category, minPrepTime, maxPrepTime, minCookTime, maxCookTime } = req.query;
+      console.log('Query Parameters:', { search, category, minPrepTime, maxPrepTime, minCookTime, maxCookTime });
   
+      const filter = {};
+  
+      if (search) {
+        filter.title = { $regex: search, $options: 'i' };
+      }
+      if (category) {
+        filter.category = { $regex: category, $options: 'i' }; // Case-insensitive match
+      }
+      if (minPrepTime && !isNaN(minPrepTime)) {
+        filter.prepTime = { ...filter.prepTime, $gte: Number(minPrepTime) };
+      }
+      if (maxPrepTime && !isNaN(maxPrepTime)) {
+        filter.prepTime = { ...filter.prepTime, $lte: Number(maxPrepTime) };
+      }
+      if (minCookTime && !isNaN(minCookTime)) {
+        filter.cookTime = { ...filter.cookTime, $gte: Number(minCookTime) };
+      }
+      if (maxCookTime && !isNaN(maxCookTime)) {
+        filter.cookTime = { ...filter.cookTime, $lte: Number(maxCookTime) };
+      }
+  
+      // Fetch filtered recipes from the database
+      const recipes = await RecipeModel.find(filter);
+  
+      res.json(recipes);
+    } catch (error) {
+      console.error('Error fetching filtered recipes:', error);
+      res.status(500).json({ error: 'Failed to fetch recipes' });
+    }
+  },
+
 };
 
 module.exports = RecipeController;

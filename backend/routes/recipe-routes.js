@@ -1,6 +1,6 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const RecipeController = require('../controllers/recipe-controller');
+const RecipeController = require("../controllers/recipe-controller");
 
 /**
  * @swagger
@@ -176,9 +176,54 @@ const RecipeController = require('../controllers/recipe-controller');
  *         description: Recipe not found
  */
 
-router.get('/', RecipeController.getRecipes);
-router.post('/', RecipeController.addRecipe);
-router.put('/:id', RecipeController.updateRecipe);
-router.delete('/:id', RecipeController.deleteRecipe);
+
+/**
+ * @swagger
+ * /api/recipes/filter:
+ *   get:
+ *     summary: Filter recipe list
+ *     tags: [Recipe]
+ *     parameters:
+ *       - in: query
+ *         name: search
+ *         schema:
+ *           type: string
+ *         description: Search keyword for recipe title.
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: Category of the recipe.
+ *       - in: query
+ *         name: prepTime
+ *         schema:
+ *           type: integer
+ *         description: Maximum preparation time in minutes.
+ *       - in: query
+ *         name: cookTime
+ *         schema:
+ *           type: integer
+ *         description: Maximum cooking time in minutes.
+ *     responses:
+ *       200:
+ *         description: A list of filtered recipes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/RecipeModel'
+ *       404:
+ *         description: Recipes not found
+ *       500:
+ *         description: Server error
+ */
+
+
+router.get("/", RecipeController.getRecipes);
+router.post("/", RecipeController.addRecipe);
+router.put("/:id", RecipeController.updateRecipe);
+router.delete("/:id", RecipeController.deleteRecipe);
+router.get("/filter", RecipeController.filterRecipes);
 
 module.exports = router;
