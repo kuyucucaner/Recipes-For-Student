@@ -54,8 +54,11 @@ const AuthController = require('../controllers/auth-controller');
  *       500:
  *         description: Server error
  */
-router.post('/register', AuthController.registerUser);
+router.post('/register',AuthController.registerUser);
 router.get('/verify/:token', AuthController.verifyEmail);
+router.post('/login', AuthController.authUser);
+router.post('/refresh-token', AuthController.refreshToken);
+router.post('/logout', AuthController.logoutUser);
 
 /**
  * @swagger
@@ -100,6 +103,6 @@ router.get('/verify/:token', AuthController.verifyEmail);
  *       500:
  *         description: Server error
  */
-router.post('/login', AuthController.authUser);
+
 
 module.exports = router;

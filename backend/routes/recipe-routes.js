@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const RecipeController = require("../controllers/recipe-controller");
-
+const {protect} = require('../middleware/protect');
 /**
  * @swagger
  * components:
@@ -221,9 +221,9 @@ const RecipeController = require("../controllers/recipe-controller");
 
 
 router.get("/", RecipeController.getRecipes);
-router.post("/", RecipeController.addRecipe);
-router.put("/:id", RecipeController.updateRecipe);
-router.delete("/:id", RecipeController.deleteRecipe);
+router.post("/", protect,RecipeController.addRecipe);
+router.put("/:id",protect ,RecipeController.updateRecipe);
+router.delete("/:id", protect ,RecipeController.deleteRecipe);
 router.get("/filter", RecipeController.filterRecipes);
 
 module.exports = router;

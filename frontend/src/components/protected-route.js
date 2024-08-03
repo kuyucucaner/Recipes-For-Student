@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import toastr from 'toastr';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-  const token = Cookies.get('token');
+  const token = Cookies.get('accessToken');
     console.log('Token Protected-Route', token);
   if (!token) {
     // Token yoksa login sayfasına yönlendir

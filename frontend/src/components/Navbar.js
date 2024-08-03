@@ -12,7 +12,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const fetchUserRole = () => {
-      const token = Cookies.get('token');
+      const token = Cookies.get('accessToken');
       if (token) {
         try {
           const decoded = jwtDecode(token);
@@ -29,7 +29,8 @@ const Navbar = () => {
   const handleLogout = () => {
     toastr.success('Logout successful!', 'Success');
     setTimeout(() => {
-      Cookies.remove('token'); // Remove token from cookies
+      Cookies.remove('accessToken'); // Remove token from cookies
+      Cookies.remove('refreshToken'); // Remove token from cookies
       setRole(null); // Clear role from state
       navigate('/');  // Redirect to the desired route
       window.location.reload(); // Reload the page

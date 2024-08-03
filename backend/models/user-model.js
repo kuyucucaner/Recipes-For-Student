@@ -30,7 +30,13 @@ const UserSchema = new mongoose.Schema({
   verificationToken: {
     type: String,
     default: null
+  },
+  refreshToken: {
+    type: String,
+    default: null
   }
+}, {
+  timestamps: true
 });
 
 // Şifreyi kaydetmeden önce hashle

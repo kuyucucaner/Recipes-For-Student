@@ -3,10 +3,12 @@ const {sendEmail} = require('../controllers/mail-controller');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const generateToken = (id, role) => {
-  return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+const generateToken = (id, role, expiresIn ) => {
+  return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn });
 };
-
+const generateRefreshToken = (id, role , expiresIn) => {
+  return jwt.sign({ id, role }, process.env.REFRESH_TOKEN_SECRET,  { expiresIn });
+};
 const AuthController = {
   registerUser: async function (req, res) {
     const { username, email, password, role } = req.body;
@@ -76,12 +78,22 @@ const AuthController = {
           return res.status(401).json({ message: 'Email not verified' });
         }
 
-        const token = generateToken(user._id, user.role);
-        res.cookie('token', token, {
-          httpOnly: false, // değiştir
+
+        const accessToken = generateToken(user._id, user.role, '1h');
+        const refreshToken = generateRefreshToken(user._id, user.role, '30d');
+        user.refreshToken = refreshToken;
+        await user.save();
+        res.cookie('accessToken', accessToken, {
+          httpOnly: false,
           secure: process.env.NODE_ENV === 'production',
           sameSite: 'Strict',
-          maxAge: 30 * 24 * 60 * 60 * 1000
+          maxAge: 60 * 60 * 1000 // 1 hour
+        });
+        res.cookie('refreshToken', refreshToken, {
+          httpOnly: false,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'Strict',
+          maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
         });
         res.json({
           _id: user._id,
@@ -94,6 +106,59 @@ const AuthController = {
       }
     } catch (error) {
       console.error('Error in authUser:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+  refreshToken: async function (req, res) {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'No refresh token provided' });
+    }
+
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+      const user = await User.findById(decoded.id);
+
+      if (!user || user.refreshToken !== refreshToken) {
+        return res.status(401).json({ message: 'Invalid refresh token' });
+      }
+
+      const newAccessToken = generateToken(user._id, user.role, '1h');
+
+      res.cookie('accessToken', newAccessToken, {
+        httpOnly: false,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict',
+        maxAge: 60 * 60 * 1000 // 1 hour
+      });
+
+      res.json({ accessToken: newAccessToken });
+    } catch (error) {
+      console.error('Error in refreshToken:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+  logoutUser: async function (req, res) {
+    const { refreshToken } = req.cookies;
+
+    if (!refreshToken) {
+      return res.status(400).json({ message: 'No refresh token provided' });
+    }
+
+    try {
+      const user = await User.findOneAndUpdate({ refreshToken }, { refreshToken: null });
+
+      if (!user) {
+        return res.status(400).json({ message: 'Invalid refresh token' });
+      }
+
+      res.clearCookie('accessToken');
+      res.clearCookie('refreshToken');
+
+      res.json({ message: 'Logged out successfully' });
+    } catch (error) {
+      console.error('Error in logoutUser:', error);
       res.status(500).json({ message: 'Server error' });
     }
   }
