@@ -7,7 +7,6 @@ frontend/.env
 # Derleme sonuçlarını (genellikle "node_modules/" veya "vendor/" dizinleri) yoksay
 node_modules/
 vendor/
-node_modules
 # IDE veya metin düzenleyici özel dosyalarını yoksay
 .idea/
 .vscode/
