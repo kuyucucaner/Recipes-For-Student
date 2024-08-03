@@ -2,7 +2,6 @@
 
 # Veritabanı bağlantı bilgilerini içeren .env dosyasını yoksay
 .env
-backend/.env
 
 
 # Derleme sonuçlarını (genellikle "node_modules/" veya "vendor/" dizinleri) yoksay
