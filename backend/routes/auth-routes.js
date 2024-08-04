@@ -166,6 +166,85 @@ const { protect } = require('../middleware/protect');
  *       500:
  *         description: Server error
  */
+
+
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   put:
+ *     tags: [Authentication]
+ *     summary: Update user information
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               role:
+ *                 type: number
+ *             required:
+ *               - username
+ *               - email
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                 user:
+ *                   $ref: '#/components/schemas/UserModel'
+ *       400:
+ *         description: Invalid input data
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /api/users/{userId}:
+ *   delete:
+ *     tags: [Authentication]
+ *     summary: Delete a user
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The user ID
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       400:
+ *         description: User role is not Admin
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+
+router.delete('/:userId' , protect , AuthController.deleteUserById);
+router.put('/:userId', protect, AuthController.updateUserById);
 router.get('/profile', AuthController.getUserById);
 router.post('/register', AuthController.registerUser);
 router.get('/verify/:token', AuthController.verifyEmail);

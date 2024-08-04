@@ -180,8 +180,6 @@ const AuthController = {
     }
   },
 
-
-
   getUserById: async function (req , res) {
   const { accessToken } = req.cookies;
     console.log('req cookies : ' , req.cookies);
@@ -216,9 +214,53 @@ const AuthController = {
     console.error('Error in getUserById:', error);
     res.status(500).json({ message: 'Server error' });
   }
+  },
+
+  updateUserById: async function (req , res) {
+    try {
+
+      const user = await UserModel.findById(req.params.userId);
+      if(!user){
+        return res.status(404).json({message : 'User not found'});
+      }
+      const updates = req.body; // `updates` nesnesi olarak `req.body`'yi kullanın
+
+      Object.keys(updates).forEach((key) => {
+        user[key] = updates[key];
+      });
+      await user.save();
+
+      res.status(200).json({
+        message : 'User updated successfully!',user
+      });
+    }
+    catch (error) {   
+   console.error('Error in getUserById:', error);
+      res.status(500).json({ message: 'Server error' });
+    }
+  },
+
+
+  deleteUserById: async function (req, res) {
+    try {
+      const user = await UserModel.findById(req.params.userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      if (user.role === 1) {
+        await UserModel.deleteOne({ _id: req.params.userId });
+        return res.status(200).json({ message: 'User deleted successfully!' });
+      } else {
+        return res.status(400).json({ message: 'User role is not Admin!' });
+      }
+  
+    } catch (error) {
+      console.error('Error in deleteUserById:', error);
+      return res.status(500).json({ message: 'Server error' });
+    }
   }
-
-
+  
 
 };
 
