@@ -9,6 +9,8 @@ import Home from './components/home';
 import ProtectedRoute from './components/protected-route';
 import { requestNotificationPermission} from './utils/notification-utils';
 
+
+const Profile = lazy(() => import('./components/profile'));
 const RecipeDetail = lazy(() => import('./components/recipe-detail'));
 const RecipeList = lazy(() => import('./components/recipe-list'));
 const AddRecipe = lazy(() => import('./components/add-recipe'));
@@ -25,6 +27,9 @@ const App = () => {
         <Routes>
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route element={<ProtectedRoute allowedRoles={[2, 1,0]} />}>
+          <Route path="/profile" element={<Profile />} />
+          </Route>
           <Route path="/" element={<Home />}/>
           <Route path="/recipe-list" element={<RecipeList />} />
           <Route path="/recipes/detail/:id" element={<RecipeDetail />} />

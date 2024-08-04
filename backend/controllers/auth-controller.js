@@ -1,4 +1,4 @@
-const User = require('../models/user-model');
+const UserModel = require('../models/user-model');
 const {sendEmail} = require('../controllers/mail-controller');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
@@ -10,19 +10,22 @@ const generateRefreshToken = (id, role , expiresIn) => {
   return jwt.sign({ id, role }, process.env.REFRESH_TOKEN_SECRET,  { expiresIn });
 };
 const AuthController = {
+
+
+
   registerUser: async function (req, res) {
     const { username, email, password, role } = req.body;
 
     try {
       // Kullanıcı var mı kontrol et
-      const userExists = await User.findOne({ email });
+      const userExists = await UserModel.findOne({ email });
 
       if (userExists) {
         return res.status(400).json({ message: 'User already exists' });
       }
 
       // Yeni kullanıcı oluştur
-      const user = new User({ username, email, password, role });
+      const user = new UserModel({ username, email, password, role });
       
       // E-posta doğrulama token'ı oluştur
       const verificationToken = user.createVerificationToken();
@@ -46,11 +49,15 @@ const AuthController = {
     }
   },
 
+
+
+
+
   verifyEmail: async function (req, res) {
     const { token } = req.params;
 
     try {
-      const user = await User.findOne({ verificationToken: token });
+      const user = await UserModel.findOne({ verificationToken: token });
 
       if (!user) {
         return res.status(400).json({ message: 'Invalid or expired token' });
@@ -67,11 +74,14 @@ const AuthController = {
     }
   },
 
+
+
+
   authUser: async function (req, res) {
     const { email, password } = req.body;
 
     try {
-      const user = await User.findOne({ email });
+      const user = await UserModel.findOne({ email });
 
       if (user && (await user.matchPassword(password))) {
         if (!user.isVerified) {
@@ -109,6 +119,10 @@ const AuthController = {
       res.status(500).json({ message: 'Server error' });
     }
   },
+
+
+
+
   refreshToken: async function (req, res) {
     const { refreshToken } = req.cookies;
 
@@ -118,7 +132,7 @@ const AuthController = {
 
     try {
       const decoded = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
-      const user = await User.findById(decoded.id);
+      const user = await UserModel.findById(decoded.id);
 
       if (!user || user.refreshToken !== refreshToken) {
         return res.status(401).json({ message: 'Invalid refresh token' });
@@ -139,6 +153,9 @@ const AuthController = {
       res.status(500).json({ message: 'Server error' });
     }
   },
+
+
+
   logoutUser: async function (req, res) {
     const { refreshToken } = req.cookies;
 
@@ -147,7 +164,7 @@ const AuthController = {
     }
 
     try {
-      const user = await User.findOneAndUpdate({ refreshToken }, { refreshToken: null });
+      const user = await UserModel.findOneAndUpdate({ refreshToken }, { refreshToken: null });
 
       if (!user) {
         return res.status(400).json({ message: 'Invalid refresh token' });
@@ -161,7 +178,48 @@ const AuthController = {
       console.error('Error in logoutUser:', error);
       res.status(500).json({ message: 'Server error' });
     }
+  },
+
+
+
+  getUserById: async function (req , res) {
+  const { accessToken } = req.cookies;
+    console.log('req cookies : ' , req.cookies);
+  if(!accessToken){
+    console.warn('Access token missing');
+
+    return res.status(400).json({message : 'No access token provided'});
   }
+  try {
+    const decoded = jwt.verify(accessToken, process.env.JWT_SECRET);
+    const user = await UserModel.findById(decoded.id);
+    if(!user){
+      console.warn(`User not found for ID: ${decoded.id}`);
+      return  res.status(404).json({ message : 'User not found!'});
+    }
+    console.log('User : ' , user);
+    res.status(200).json({ user });
+  }
+  catch (error) {
+    if (error.name === 'TokenExpiredError') {
+      console.warn('Access token expired');
+
+      return res.status(401).json({ message: 'Access token expired' });
+    }
+
+    if (error.name === 'JsonWebTokenError') {
+      console.warn('Invalid access token');
+
+      return res.status(401).json({ message: 'Invalid access token' });
+    }
+
+    console.error('Error in getUserById:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+  }
+
+
+
 };
 
 module.exports = AuthController;

@@ -9,10 +9,12 @@ const recipeRoutes = require('./routes/recipe-routes');
 const authRoutes = require('./routes/auth-routes');
 const mailRoutes = require('./routes/mail-routes');
 require('dotenv').config();
+const cookieParser = require('cookie-parser');
 
 
 const app = express();
 // Middleware
+app.use(cookieParser()); // Add this line
 app.use(express.json());
 app.use(helmet());
 const corsOptions = {
@@ -21,30 +23,43 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-// Swagger Setup
+
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Recipe API',
+      title: 'API Documentation',
       version: '1.0.0',
-      description: 'API for Recipe App',
+      description: 'API Information',
     },
     servers: [
       {
         url: 'http://localhost:5000',
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT', // Bu isteğe bağlı, ancak JSON Web Token kullanıyorsanız eklemek iyi bir fikirdir
+        },
+      },
+    },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
-  apis: ['./routes/*.js'],
+  apis: ['./routes/*.js'], // Yolları kontrol edin
 };
-
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Routes
-app.use('/api/recipes', recipeRoutes);
 app.use('/api/users', authRoutes);
+app.use('/api/recipes', recipeRoutes);
 app.use('/api/mails', mailRoutes);
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
