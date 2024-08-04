@@ -11,7 +11,19 @@ const RecipeController = {
       res.status(500).send('Server Error');
     }
   },
-
+  getRecipeById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const recipe = await RecipeModel.findById(id);
+      if (!recipe) {
+        return res.status(404).json({ msg: 'Recipe not found' });
+      }
+      res.json(recipe);
+    } catch (error) {
+      console.error('Server Error:', error.message); // Log detailed error message
+      res.status(500).send('Server Error');
+    }
+  },
   addRecipe: [
     body('title').not().isEmpty().withMessage('Title is required'),
     body('ingredients').not().isEmpty().withMessage('Ingredients are required'),

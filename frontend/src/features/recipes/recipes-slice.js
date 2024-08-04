@@ -7,6 +7,16 @@ export const fetchRecipes = createAsyncThunk('recipes/fetchRecipes', async () =>
   return response.data;
 });
 
+export const fetchRecipeById = createAsyncThunk('recipes/fetchRecipeById', async ({ id }) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/recipes/detail/${id}`);
+    return response.data;
+  } catch (error) {
+    // You can handle error more specifically if needed
+    console.error('Failed to fetch recipe by ID:', error);
+    throw error;
+  }
+});
 // Getirme işlemi için async thunk (Filtrelenmiş tarifler)
 export const fetchFilterRecipes = createAsyncThunk(
   'recipes/fetchFilterRecipes',
@@ -44,6 +54,7 @@ const recipesSlice = createSlice({
   name: 'recipes',
   initialState: {
     recipes: [],
+    recipe: null, // Tek bir tarif için state değişkeni
     status: 'idle',
     error: null,
   },
@@ -61,6 +72,17 @@ const recipesSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
+    .addCase(fetchRecipeById.pending, (state)=>{
+      state.status='loading';
+    })
+    .addCase(fetchRecipeById.fulfilled, (state,action) => {
+      state.status='succeeded';
+      state.recipe = action.payload; // Tek bir tarif için state.recipe kullanılıyor
+    })
+    .addCase(fetchRecipeById.rejected, (state,action) =>{
+      state.status='failed';
+      state.error=action.error.message;
+    })
       .addCase(addRecipe.fulfilled, (state, action) => {
         state.recipes.push(action.payload);
       })

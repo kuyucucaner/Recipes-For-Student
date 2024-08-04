@@ -126,6 +126,30 @@ const {protect} = require('../middleware/protect');
  *             schema:
  *               $ref: '#/components/schemas/RecipeModel'
  */
+/**
+ * @swagger
+ * /api/recipes/detail/{id}:
+ *   get:
+ *     summary: Get a recipe by id 
+ *     tags: [Recipe]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: Recipe ID
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Recipe getting succesfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/RecipeModel'
+ *       404:
+ *         description: Recipe not found
+ 
+ */
 
 /**
  * @swagger
@@ -221,9 +245,10 @@ const {protect} = require('../middleware/protect');
 
 
 router.get("/", RecipeController.getRecipes);
+router.get('/detail/:id', RecipeController.getRecipeById);
+router.get("/filter", RecipeController.filterRecipes);
 router.post("/", protect,RecipeController.addRecipe);
 router.put("/:id",protect ,RecipeController.updateRecipe);
 router.delete("/:id", protect ,RecipeController.deleteRecipe);
-router.get("/filter", RecipeController.filterRecipes);
 
 module.exports = router;

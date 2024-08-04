@@ -40,6 +40,9 @@ const Recipe = ({ recipe }) => {
       <Link to={`/update-recipe/${recipe._id}`}>
         <button className='recipe-update-button'>Edit</button>
       </Link>
+
+            <Link to={`/recipes/detail/${recipe._id}`}>{recipe.title}</Link>
+  
       <button className='recipe-delete-button' onClick={handleDelete}>Delete</button>
 
     </div>
