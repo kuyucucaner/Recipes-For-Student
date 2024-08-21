@@ -34,7 +34,9 @@ const UserSchema = new mongoose.Schema({
   refreshToken: {
     type: String,
     default: null
-  }
+  },
+  favoriteRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+
 }, {
   timestamps: true
 });

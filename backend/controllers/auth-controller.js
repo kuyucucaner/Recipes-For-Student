@@ -239,7 +239,7 @@ const AuthController = {
       res.status(500).json({ message: 'Server error' });
     }
   },
-
+  
 
   deleteUserById: async function (req, res) {
     try {
@@ -257,6 +257,23 @@ const AuthController = {
   
     } catch (error) {
       console.error('Error in deleteUserById:', error);
+      return res.status(500).json({ message: 'Server error' });
+    }
+  },
+
+  addFavoriteRecipe : async function (req,res) {
+    try {
+      const { userId, recipeId } = req.params;
+
+      const user = await UserModel.findById(userId);
+      if (!user.favoriteRecipes.includes(recipeId)) {
+        user.favoriteRecipes.push(recipeId);
+      }
+    
+      await user.save();
+      res.json(user);
+    } catch (error) {
+      console.error('Error in add favorite recipe:', error);
       return res.status(500).json({ message: 'Server error' });
     }
   }

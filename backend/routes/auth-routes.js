@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const AuthController = require('../controllers/auth-controller');
 const { protect } = require('../middleware/protect');
+
 /**
  * @swagger
  * tags:
@@ -141,12 +142,18 @@ const { protect } = require('../middleware/protect');
  *         description: Server error
  */
 
+/**
+ * @swagger
+ * tags:
+ *   name: User Operation
+ *   description: Operations that users can perform
+ */
 
 /**
  * @swagger
  * /api/users/profile:
  *   get:
- *     tags: [Authentication]
+ *     tags: [User Operation]
  *     summary: Get the authenticated user's profile
  *     security:
  *       - bearerAuth: []
@@ -167,12 +174,11 @@ const { protect } = require('../middleware/protect');
  *         description: Server error
  */
 
-
 /**
  * @swagger
  * /api/users/{userId}:
  *   put:
- *     tags: [Authentication]
+ *     tags: [User Operation]
  *     summary: Update user information
  *     parameters:
  *       - in: path
@@ -223,7 +229,7 @@ const { protect } = require('../middleware/protect');
  * @swagger
  * /api/users/{userId}:
  *   delete:
- *     tags: [Authentication]
+ *     tags: [User Operation]
  *     summary: Delete a user
  *     parameters:
  *       - in: path
@@ -243,9 +249,58 @@ const { protect } = require('../middleware/protect');
  *         description: Server error
  */
 
-router.delete('/:userId' , protect , AuthController.deleteUserById);
+/**
+ * @swagger
+ * /api/users/{userId}/favorites/{recipeId}:
+ *   put:
+ *     tags: [User Operation]
+ *     summary: Add a recipe to the user's favorites
+ *     description: Adds a specified recipe to the list of favorite recipes for a given user.
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         description: ID of the user
+ *         required: true
+ *         schema:
+ *           type: string
+ *       - name: recipeId
+ *         in: path
+ *         description: ID of the recipe to add to favorites
+ *         required: true
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Recipe successfully added to favorites
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                   description: The ID of the user
+ *                 favoriteRecipes:
+ *                   type: array
+ *                   items:
+ *                     type: string
+ *                   description: Array of favorite recipe IDs
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: Error message
+ */
+
+router.delete('/:userId', protect, AuthController.deleteUserById);
 router.put('/:userId', protect, AuthController.updateUserById);
-router.get('/profile', AuthController.getUserById);
+router.put('/:userId/favorites/:recipeId', protect, AuthController.addFavoriteRecipe);
+router.get('/profile', protect, AuthController.getUserById);
 router.post('/register', AuthController.registerUser);
 router.get('/verify/:token', AuthController.verifyEmail);
 router.post('/login', AuthController.authUser);
