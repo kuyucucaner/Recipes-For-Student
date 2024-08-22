@@ -69,11 +69,17 @@ const RecipeSchema = new mongoose.Schema({
   tags: {
     type: [String], // Tarifin etiketleri (örneğin, vegan, glutensiz, hızlı tarif)
   },
-  rating: {
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Review',
+    },
+  ],
+  averageRating: {
     type: Number,
-    min: 0,
-    max: 5, // Tarifin kullanıcılar tarafından değerlendirilmesi (0-5 arası)
+    default: 0,
   },
+
 });
 
 module.exports = mongoose.model('Recipe', RecipeSchema);

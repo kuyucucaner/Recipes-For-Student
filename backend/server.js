@@ -8,6 +8,7 @@ const swaggerUi = require('swagger-ui-express');
 const recipeRoutes = require('./routes/recipe-routes');
 const authRoutes = require('./routes/auth-routes');
 const mailRoutes = require('./routes/mail-routes');
+const reviewRoutes = require('./routes/review-routes');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 
@@ -61,10 +62,12 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use('/api/users', authRoutes);
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/mails', mailRoutes);
+app.use('/api/reviews', reviewRoutes);
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  
 })
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));

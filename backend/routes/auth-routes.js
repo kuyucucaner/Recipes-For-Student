@@ -296,7 +296,39 @@ const { protect } = require('../middleware/protect');
  *                   type: string
  *                   description: Error message
  */
-
+/**
+ * @swagger
+ * /api/users/{userId}/favorites:
+ *   get:
+ *     tags: [User Operation]
+ *     summary: Get the list of favorite recipes for a user
+ *     description: Retrieves the list of favorite recipes for the specified user.
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: The ID of the user
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the list of favorite recipes
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/RecipeModel'
+ *       400:
+ *         description: No access token provided
+ *       401:
+ *         description: Unauthorized or token expired
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/:userId/favorites', protect, AuthController.getFavoriteRecipeListByUserId);
 router.delete('/:userId', protect, AuthController.deleteUserById);
 router.put('/:userId', protect, AuthController.updateUserById);
 router.put('/:userId/favorites/:recipeId', protect, AuthController.addFavoriteRecipe);
