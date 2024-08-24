@@ -11,6 +11,7 @@ const mailRoutes = require('./routes/mail-routes');
 const reviewRoutes = require('./routes/review-routes');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
 
 
 const app = express();
@@ -18,6 +19,14 @@ const app = express();
 app.use(cookieParser()); // Add this line
 app.use(express.json());
 app.use(helmet());
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 dakika
+  max: 100, // Bu zaman aralığında maksimum 100 istek
+  message: "Çok fazla istek yolladınız. Lütfen daha sonra tekrar deneyin.",
+  headers: true, // Rate limit bilgilerini header'larda göstermek için
+});
+app.use(limiter);
+
 const corsOptions = {
   origin: 'http://localhost:3000', // Frontend uygulamanızın URL'si
   credentials: true, // Cookie ve diğer kimlik bilgilerini desteklemek için
