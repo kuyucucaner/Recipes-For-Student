@@ -5,7 +5,7 @@ const RecipeController = {
   getRecipes: async (req, res) => {
     try {
       const recipes = await RecipeModel.find();
-      res.json(recipes);
+      res.status(200).json(recipes);
     } catch (error) {
       console.error('Server Error:', error.message); // Log detailed error message
       res.status(500).send('Server Error');
@@ -18,16 +18,13 @@ const RecipeController = {
       if (!recipe) {
         return res.status(404).json({ msg: 'Recipe not found' });
       }
-      res.json(recipe);
+      res.status(200).json(recipe);
     } catch (error) {
       console.error('Server Error:', error.message); // Log detailed error message
       res.status(500).send('Server Error');
     }
   },
-  addRecipe: [
-    body('title').not().isEmpty().withMessage('Title is required'),
-    body('ingredients').not().isEmpty().withMessage('Ingredients are required'),
-    body('instructions').not().isEmpty().withMessage('Instructions are required'),
+  addRecipe:
     async (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -37,19 +34,14 @@ const RecipeController = {
         const newRecipe = new RecipeModel({ ...req.body });
         const recipe = await newRecipe.save();
         console.log('Add Recipe : ', newRecipe);
-        res.json(recipe);
+        res.status(201).json(recipe);
       } catch (error) {
         console.error('Server Error:', error.message); // Log detailed error message
         res.status(500).send('Server Error');
       }
     },
-  ],
 
-  updateRecipe: [
-    body('title').optional().not().isEmpty().withMessage('Title is required'),
-    body('ingredients').optional().not().isEmpty().withMessage('Ingredients are required'),
-    body('instructions').optional().not().isEmpty().withMessage('Instructions are required'),
-    async (req, res) => {
+  updateRecipe: async (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -68,28 +60,28 @@ const RecipeController = {
         });
 
         console.log('Update Recipe : ', updatedRecipe);
-        res.json(updatedRecipe);
+        res.status(201).json(updatedRecipe);
       } catch (error) {
         console.error('Server Error:', error.message); // Log detailed error message
         res.status(500).send('Server Error');
       }
     },
-  ],
 
-  deleteRecipe: async (req, res) => {
-    try {
-      const result = await RecipeModel.findByIdAndDelete(req.params.id);
-  
-      if (!result) {
-        return res.status(404).json({ msg: 'Recipe not found' });
+    deleteRecipe: async (req, res) => {
+      try {
+        const result = await RecipeModel.findByIdAndDelete(req.params.id);
+    
+        if (!result) {
+          return res.status(404).json({ msg: 'Recipe not found' });
+        }
+    
+        res.status(200).json({ msg: 'Recipe removed' }); // Başarı durumunda 200 döndürün
+      } catch (error) {
+        console.error('Server Error:', error.message); // Log detailed error message
+        res.status(500).send('Server Error');
       }
-  
-      res.json({ msg: 'Recipe removed' });
-    } catch (error) {
-      console.error('Server Error:', error.message); // Log detailed error message
-      res.status(500).send('Server Error');
-    }
-  },
+    },
+    
   filterRecipes: async (req, res) => {
     try {
       const { search, category, minPrepTime, maxPrepTime, minCookTime, maxCookTime } = req.query;
@@ -119,7 +111,7 @@ const RecipeController = {
       // Fetch filtered recipes from the database
       const recipes = await RecipeModel.find(filter);
   
-      res.json(recipes);
+      res.status(200).json(recipes);
     } catch (error) {
       console.error('Error fetching filtered recipes:', error);
       res.status(500).json({ error: 'Failed to fetch recipes' });
