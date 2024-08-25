@@ -8,6 +8,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.MAIL_PASSWORD
   }
 });
+console.log('Transporter:', transporter); // Add this line
 
 const sendEmail = async (to, subject, text) => {
   const mailOptions = {
@@ -19,9 +20,9 @@ const sendEmail = async (to, subject, text) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully'); // Konsolda bilgi almak için
+    console.log('Email sent successfully');
   } catch (error) {
-    console.error('Error sending email:', error.message); // Detaylı hata mesajını görmek için
+    console.error('Error sending email:', error.message);
     throw new Error('Error sending email: ' + error.message);
   }
 };
