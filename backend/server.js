@@ -9,12 +9,13 @@ const recipeRoutes = require('./routes/recipe-routes');
 const authRoutes = require('./routes/auth-routes');
 const mailRoutes = require('./routes/mail-routes');
 const reviewRoutes = require('./routes/review-routes');
+const storageRoutes = require('./routes/storage-routes');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 
-
 const app = express();
+
 // Middleware
 app.use(cookieParser()); // Add this line
 app.use(express.json());
@@ -72,6 +73,7 @@ app.use('/api/users', authRoutes);
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/mails', mailRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/storage', storageRoutes);
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
