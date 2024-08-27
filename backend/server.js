@@ -34,7 +34,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -53,9 +52,24 @@ const swaggerOptions = {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
-          bearerFormat: 'JWT', // Bu isteğe bağlı, ancak JSON Web Token kullanıyorsanız eklemek iyi bir fikirdir
+          bearerFormat: 'JWT',
         },
       },
+      schemas: {
+        ErrorResponse: {
+          type: 'object',
+          properties: {
+            msg: {
+              type: 'string',
+              example: 'Error message'
+            },
+            error: {
+              type: 'string',
+              example: 'Detailed error message'
+            }
+          }
+        }
+      }
     },
     security: [
       {
@@ -65,8 +79,10 @@ const swaggerOptions = {
   },
   apis: ['./routes/*.js'], // Yolları kontrol edin
 };
+
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 // Routes
 app.use('/api/users', authRoutes);

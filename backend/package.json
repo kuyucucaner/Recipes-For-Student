@@ -28,6 +28,7 @@
     "mocha": "^10.7.3",
     "mongoose": "^8.5.4",
     "nodemailer": "^6.9.14",
+    "redis": "^4.7.0",
     "sinon": "^18.0.0",
     "supertest": "^7.0.0",
     "swagger-jsdoc": "^6.2.8",

@@ -251,4 +251,65 @@ router.post("/", protect,RecipeController.addRecipe);
 router.put("/:id",protect ,RecipeController.updateRecipe);
 router.delete("/:id", protect ,RecipeController.deleteRecipe);
 
+// REDİS 
+/**
+ * @swagger
+ * /api/recipes/{id}:
+ *   get:
+ *     summary: Retrieve a recipe by its ID
+ *     description: Fetches a recipe from the database by its unique identifier.
+ *     tags: [Recipes]
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: Unique identifier of the recipe
+ *         schema:
+ *           type: string
+ *           example: "66a8aaacd2c09c6b7697d06d"
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the recipe
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/RecipeModel'
+ *       400:
+ *         description: Invalid Recipe ID provided
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: 'Valid Recipe ID is required'
+ *       404:
+ *         description: Recipe not found with the provided ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: 'Recipe not found'
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 msg:
+ *                   type: string
+ *                   example: 'Server Error'
+ *                 error:
+ *                   type: string
+ *                   example: 'Detailed server error message'
+ */
+
+router.get('/:id', RecipeController.getRecipe);
+
+
 module.exports = router;

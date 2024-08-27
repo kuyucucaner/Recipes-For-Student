@@ -1,7 +1,28 @@
 const RecipeModel = require('../models/recipe-model');
 const { body, validationResult } = require('express-validator');
+const { getRecipeID } = require('../services/recipe-service');
+
 
 const RecipeController = {
+  //REDİS
+  getRecipe: async (req, res) => {
+    const { id } = req.params;
+
+    try {
+      // Tarifi almak için servis fonksiyonunu çağır
+      const { status, data } = await getRecipeID(id);
+  
+      // Yanıt durumuna göre uygun HTTP yanıtını döndür
+      return res.status(status).json(data);
+    } catch (error) {
+      // Sunucu hatası durumunda yanıt döndür
+      console.error('Error retrieving recipe:', error.message);
+      return res.status(500).json({ msg: 'Server Error', error: error.message });
+    }
+  },
+  
+
+// WİTHOUT REDİS
   getRecipes: async (req, res) => {
     try {
       const recipes = await RecipeModel.find();
@@ -11,6 +32,7 @@ const RecipeController = {
       res.status(500).send('Server Error');
     }
   },
+
   getRecipeById: async (req, res) => {
     try {
       const { id } = req.params;
@@ -24,8 +46,8 @@ const RecipeController = {
       res.status(500).send('Server Error');
     }
   },
-  addRecipe:
-    async (req, res) => {
+  
+  addRecipe: async (req, res) => {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
