@@ -13,6 +13,8 @@ const storageRoutes = require('./routes/storage-routes');
 const recommendRoutes = require('./routes/recommend-routes');
 const followerRoutes = require('./routes/follower-routes');
 const postRoutes = require('./routes/post-routes');
+const likeRoutes = require('./routes/like-routes');
+const mealRoutes = require('./routes/meal-routes');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
@@ -96,6 +98,8 @@ app.use('/api/storage', storageRoutes);
 app.use('/api/recommend', recommendRoutes);
 app.use('/api/follower', followerRoutes);
 app.use('/api/post', postRoutes);
+app.use('/api/like', likeRoutes);
+app.use('/api/meal', mealRoutes);
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
