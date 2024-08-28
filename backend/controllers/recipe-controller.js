@@ -1,5 +1,5 @@
 const RecipeModel = require('../models/recipe-model');
-const { body, validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const { getRecipeID } = require('../services/recipe-service');
 
 
