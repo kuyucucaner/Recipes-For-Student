@@ -258,7 +258,7 @@ router.delete("/:id", protect ,RecipeController.deleteRecipe);
  *   get:
  *     summary: Retrieve a recipe by its ID
  *     description: Fetches a recipe from the database by its unique identifier.
- *     tags: [Recipes]
+ *     tags: [REDIS Recipe]
  *     parameters:
  *       - name: id
  *         in: path
