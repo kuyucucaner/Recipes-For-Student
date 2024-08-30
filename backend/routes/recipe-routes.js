@@ -2,28 +2,13 @@ const express = require("express");
 const router = express.Router();
 const RecipeController = require("../controllers/recipe-controller");
 const {protect} = require('../middlewares/protect');
+const VideoUploadService = require('../services/video-upload-service');
 /**
  * @swagger
  * components:
  *   schemas:
  *     RecipeModel:
  *       type: object
- *       required:
- *         - title
- *         - ingredients
- *         - instructions
- *         - category
- *         - prepTime
- *         - cookTime
- *         - totalTime
- *         - servings
- *         - nutrition
- *         - author
- *         - datePublished
- *         - image
- *         - notes
- *         - tags
- *         - rating
  *       properties:
  *         title:
  *           type: string
@@ -51,11 +36,6 @@ const {protect} = require('../middlewares/protect');
  *           format: int32
  *         nutrition:
  *           type: object
- *           required:
- *             - calories
- *             - protein
- *             - fat
- *             - carbohydrates
  *           properties:
  *             calories:
  *               type: number
@@ -85,7 +65,12 @@ const {protect} = require('../middlewares/protect');
  *         rating:
  *           type: number
  *           format: float
+ *         video:
+ *           type: string
+ *           format: binary
  */
+
+
 
 /**
  * @swagger
@@ -109,15 +94,98 @@ const {protect} = require('../middlewares/protect');
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/RecipeModel'
+ */
+/**
+ * @swagger
+ * /api/recipes:
  *   post:
- *     summary: Create a new recipe
+ *     summary: Create a new recipe with an optional video
  *     tags: [Recipe]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/RecipeModel'
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: Title of the recipe
+ *               ingredients:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: List of ingredients
+ *               instructions:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: List of cooking instructions
+ *               category:
+ *                 type: string
+ *                 description: Category of the recipe
+ *               prepTime:
+ *                 type: integer
+ *                 format: int32
+ *                 description: Preparation time in minutes
+ *               cookTime:
+ *                 type: integer
+ *                 format: int32
+ *                 description: Cooking time in minutes
+ *               totalTime:
+ *                 type: integer
+ *                 format: int32
+ *                 description: Total time required in minutes
+ *               servings:
+ *                 type: integer
+ *                 format: int32
+ *                 description: Number of servings
+ *               nutrition:
+ *                 type: object
+ *                 description: Nutritional information
+ *                 properties:
+ *                   calories:
+ *                     type: integer
+ *                     format: int32
+ *                     description: Number of calories
+ *                   protein:
+ *                     type: integer
+ *                     format: int32
+ *                     description: Amount of protein
+ *                   fat:
+ *                     type: integer
+ *                     format: int32
+ *                     description: Amount of fat
+ *                   carbohydrates:
+ *                     type: integer
+ *                     format: int32
+ *                     description: Amount of carbohydrates
+ *               author:
+ *                 type: string
+ *                 description: Author of the recipe
+ *               datePublished:
+ *                 type: string
+ *                 format: date-time
+ *                 description: Date when the recipe was published
+ *               image:
+ *                 type: string
+ *                 description: Image of the recipe
+ *               notes:
+ *                 type: string
+ *                 description: Additional notes
+ *               tags:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                 description: Tags associated with the recipe
+ *               rating:
+ *                 type: number
+ *                 format: float
+ *                 description: Rating of the recipe
+ *               video:
+ *                 type: string
+ *                 format: binary
+ *                 description: Video related to the recipe
  *     responses:
  *       201:
  *         description: Recipe created
@@ -125,7 +193,10 @@ const {protect} = require('../middlewares/protect');
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/RecipeModel'
+ *       500:
+ *         description: Server error
  */
+
 /**
  * @swagger
  * /api/recipes/detail/{id}:
@@ -247,7 +318,7 @@ const {protect} = require('../middlewares/protect');
 router.get("/", RecipeController.getRecipes);
 router.get('/detail/:id', RecipeController.getRecipeById);
 router.get("/filter", RecipeController.filterRecipes);
-router.post("/", protect,RecipeController.addRecipe);
+router.post("/", protect, VideoUploadService, RecipeController.addRecipe);
 router.put("/:id",protect ,RecipeController.updateRecipe);
 router.delete("/:id", protect ,RecipeController.deleteRecipe);
 

@@ -53,7 +53,16 @@ const RecipeController = {
         return res.status(400).json({ errors: errors.array() });
       }
       try {
-        const newRecipe = new RecipeModel({ ...req.body });
+        let videoUrl;
+
+        // Eğer video yüklendiyse, video URL'sini belirleyin
+        if (req.files && req.files.video) {
+          videoUrl = `/uploads/videos/${req.files.video[0].filename}`;
+        }
+        
+        console.log(req.file); // Log file details
+        console.log(req.body); // Log other form fi
+        const newRecipe = new RecipeModel({ ...req.body  , videoUrl });
         const recipe = await newRecipe.save();
         console.log('Add Recipe : ', newRecipe);
         res.status(201).json(recipe);
