@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchFilterRecipes, fetchRecipes } from '../features/recipes/recipes-slice';
-import Recipe from './recipe';
-import '../styles/recipe-list.css';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchFilterRecipes,
+  fetchRecipes,
+} from "../features/recipes/recipes-slice";
+import Recipe from "./recipe";
+import "../styles/recipe-list.css";
 
 const RecipeList = () => {
   // Redux Hooks
@@ -13,12 +16,12 @@ const RecipeList = () => {
 
   // State Definitions
   const [filters, setFilters] = useState({
-    search: '',
-    category: '',
-    minPrepTime: '',
-    maxPrepTime: '',
-    minCookTime: '',
-    maxCookTime: ''
+    search: "",
+    category: "",
+    minPrepTime: "",
+    maxPrepTime: "",
+    minCookTime: "",
+    maxCookTime: "",
   });
   const [isFiltered, setIsFiltered] = useState(false);
 
@@ -34,7 +37,7 @@ const RecipeList = () => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({
       ...prevFilters,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -45,79 +48,81 @@ const RecipeList = () => {
 
   const handleClearFilters = () => {
     setFilters({
-      search: '',
-      category: '',
-      minPrepTime: '',
-      maxPrepTime: '',
-      minCookTime: '',
-      maxCookTime: ''
+      search: "",
+      category: "",
+      minPrepTime: "",
+      maxPrepTime: "",
+      minCookTime: "",
+      maxCookTime: "",
     });
     setIsFiltered(false);
   };
 
   // Status Checks
-  if (recipeStatus === 'loading') {
+  if (recipeStatus === "loading") {
     return <div>Loading...</div>;
   }
 
-  if (recipeStatus === 'failed') {
+  if (recipeStatus === "failed") {
     return <div>{error}</div>;
   }
 
   // Render
   return (
-    <div className='recipe-list-container'>
-      <div className='filters'>
+    <div className="recipe-list-container">
+      <div className="filters">
         <input
-          type='text'
-          name='search'
-          placeholder='Ara...'
+          type="text"
+          className="recipe-filter-input"
+          placeholder="Ara..."
           value={filters.search}
           onChange={handleFilterChange}
         />
         <input
-          type='text'
-          name='category'
-          placeholder='Kategori...'
+          type="text"
+          className="recipe-filter-input"
+          placeholder="Kategori..."
           value={filters.category}
           onChange={handleFilterChange}
         />
-        <div className='time-filters'>
+        <div className="time-filters">
           <input
-            type='number'
-            name='minPrepTime'
-            placeholder='Min. Hazırlama Süresi...'
+            type="number"
+            className="recipe-filter-input"
+            placeholder="Min. Hazırlama Süresi..."
             value={filters.minPrepTime}
             onChange={handleFilterChange}
           />
           <input
-            type='number'
-            name='maxPrepTime'
-            placeholder='Maks. Hazırlama Süresi...'
+            type="number"
+            className="recipe-filter-input"
+            placeholder="Maks. Hazırlama Süresi..."
             value={filters.maxPrepTime}
             onChange={handleFilterChange}
           />
           <input
-            type='number'
-            name='minCookTime'
-            placeholder='Min. Pişirme Süresi...'
+            type="number"
+            className="recipe-filter-input"
+            placeholder="Min. Pişirme Süresi..."
             value={filters.minCookTime}
             onChange={handleFilterChange}
           />
           <input
-            type='number'
-            name='maxCookTime'
-            placeholder='Maks. Pişirme Süresi...'
+            type="number"
+            className="recipe-filter-input"
+            placeholder="Maks. Pişirme Süresi..."
             value={filters.maxCookTime}
             onChange={handleFilterChange}
           />
         </div>
-        <button onClick={handleSearch}>Ara</button>
-        <button onClick={handleClearFilters}>Filtreleri Temizle</button>
+        <button className='recipe-filter-button' onClick={handleSearch}>Ara</button>
+        <button className='recipe-filter-button' onClick={handleClearFilters}>Filtreleri Temizle</button>
       </div>
-      {recipes.map((recipe) => (
-        <Recipe key={recipe._id} recipe={recipe} />
-      ))}
+      <div className="recipe-list-row">
+        {recipes.map((recipe) => (
+          <Recipe key={recipe._id} recipe={recipe} />
+        ))}
+      </div>
     </div>
   );
 };

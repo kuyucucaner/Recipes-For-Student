@@ -1,3 +1,13 @@
+.register{
+    display: flex;
+    width: 100%;
+    background: url('../images/login.svg');
+    background-size: cover; /* Resmin tüm alanı kaplaması için */
+    background-position: center; /* Resmi ortalamak için */
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+}
 .register-container{
     display: flex;
     flex-direction: column;
@@ -19,9 +29,9 @@
     font-size: 24px;
     font-weight: bold;
     letter-spacing: 2px;
-    color: black;
+    color: rgb(255, 255, 255);
     margin-top: 0;
-    border-bottom: 1px solid #00000020;
+    border-bottom: 1px solid #ffffff20;
 }
 .register-input{
     border: none;
@@ -39,4 +49,9 @@
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease-out;
+
+}
+.register-button:hover{
+    background-color: rgb(0, 149, 0);
 }

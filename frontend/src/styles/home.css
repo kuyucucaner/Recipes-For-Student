@@ -1,0 +1,64 @@
+.home-container{
+    display: block;
+    top: 0;
+    position: absolute;
+    width: 100%;
+    background-color: #33333330;
+    min-height:100vh;
+    overflow: hidden;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-image: url('../images/background-recipe.svg'); /* Arka plan resmi */
+    background-size: cover; /* Resmin tüm alanı kaplaması için */
+    background-position: center; /* Resmi ortalamak için */
+}
+
+.home-title{
+    font-size: 48px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    text-shadow: 1px 1px 1px #ffffff;
+    padding-top: 3em;
+    padding-left: 3em;
+}
+.home-subtitle{
+    font-size: 36px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #e85151;
+    text-shadow: 1px 1px 1px #e85151;
+    padding-left: 4em;
+
+}
+.home-text{
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #d92424;
+    text-shadow: 1px 1px 1px #d92424;
+    padding-left: 6em;
+
+}
+.home-button{
+    font-size: 14px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #ffffff;
+    background-color: #ff0000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top:1em;
+    text-decoration: none;
+    margin-left: 10em;
+
+}
+.home-button:hover{
+    background-color: #bb0000;
+}

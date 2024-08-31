@@ -77,6 +77,7 @@ const AddRecipe = () => {
   };
 
   return (
+    <section className="add-recipe">
     <div className="add-recipe-container">
       <form onSubmit={handleSubmit} className="add-recipe-form">
         <h3 className="add-recipe-title">Add recipe</h3>
@@ -214,6 +215,7 @@ const AddRecipe = () => {
         <button className='add-recipe-button' type="submit">Add Recipe</button>
       </form>
     </div>
+    </section>
   );
 };
 
