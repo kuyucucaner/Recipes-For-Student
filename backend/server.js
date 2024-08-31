@@ -23,6 +23,7 @@ const rateLimit = require('express-rate-limit');
 const app = express();
 
 // Middleware
+app.use(express.static('public'));
 app.use(cookieParser()); // Add this line
 app.use(express.json());
 app.use(helmet());
