@@ -16,9 +16,11 @@ const UpdateRecipePage = () => {
   }
 
   return (
+    <section className='update-recipe'>
     <div className='update-recipe-container'>
       <UpdateRecipeForm recipe={recipe} />
     </div>
+    </section>
   );
 };
 

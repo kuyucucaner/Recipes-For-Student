@@ -15,10 +15,11 @@ const Profile = () => {
   if (error) return <div className='error'>Error: {error}</div>;
 
   return (
+    <section className='profile'>
     <div className='profile-section'>
       {user ? (
         <div className='profile-info'>
-          <h1 className='profile-username'>{user.username}</h1>
+          <h1 className='profile-username'>Name : {user.username}</h1>
           <p className='profile-email'>Email: {user.email}</p>
           {/* Add more user information here if needed */}
         </div>
@@ -26,6 +27,7 @@ const Profile = () => {
         <div className='no-data'>No user data available</div>
       )}
     </div>
+    </section>
   );
 };
 

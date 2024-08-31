@@ -1,0 +1,7 @@
+.recipe-detail-section{
+    display: flex;
+    flex-direction: column;
+    padding-top: 8em;
+    background-color: #39363a;
+    min-height: 100vh;
+}

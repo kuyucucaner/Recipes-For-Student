@@ -1,10 +1,13 @@
 .recipe-section{
     display: flex;
     flex-direction: column;
-    background-color: antiquewhite;
+    background-color: rgb(55, 55, 55);
     margin: 20px;
-    box-shadow: 0 4px 8px #00000030;
-    width: 24%;
+    box-shadow: 2px 4px 8px #000000;
+    min-width: 30%;
+    max-width: 30%;
+    height: auto;
+    font-style: oblique;
 }
 .recipe-title{
     letter-spacing: 1px;
@@ -12,6 +15,7 @@
     text-align: center;
     font-size: 24px;
     border-bottom: 1px solid rgba(201, 201, 201, 0.514);
+    color: white;
 }
 .recipe-image{
     width: 90%;
@@ -19,10 +23,17 @@
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 4px 8px #00000030;
+    border: none;
+    border-radius: 5px;
+    object-fit: cover;
 }
 .recipe-attributes{
     padding-left: 10px;
     font-size: 16px;
+    color: white;
+    padding-left: 2em;
+    padding-right: 2em;
+
 }
 .recipe-update-button{
     color: white;
@@ -34,6 +45,11 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
+
+
 }
 .recipe-update-button:hover{
   background-color: rgba(250, 192, 33, 0.918);
@@ -48,7 +64,25 @@
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 2px;
  }
  .recipe-delete-button:hover{
     background-color: rgba(253, 31, 31, 0.918);
+   }
+   .recipe-detail{
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    padding:10px;
+    background-color: blue;
+    margin-bottom: 10px;
+    text-align: center;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
    }

@@ -41,7 +41,7 @@ const Recipe = ({ recipe }) => {
         <button className='recipe-update-button'>Edit</button>
       </Link>
 
-            <Link to={`/recipes/detail/${recipe._id}`}>{recipe.title}</Link>
+            <Link className='recipe-detail' to={`/recipes/detail/${recipe._id}`}>{recipe.title}</Link>
   
       <button className='recipe-delete-button' onClick={handleDelete}>Delete</button>
 

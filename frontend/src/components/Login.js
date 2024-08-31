@@ -39,6 +39,7 @@ const Login = () => {
   };
 
   return (
+    <section className='login'>
     <div className='login-container'>
     <form onSubmit={onSubmit} className='login-form'>
       <h3 className='login-title'>Login Form</h3>
@@ -47,6 +48,7 @@ const Login = () => {
       <button className='login-button' type="submit">Login</button>
     </form>
     </div>
+    </section>
   );
 };
 

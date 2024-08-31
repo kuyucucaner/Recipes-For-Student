@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRecipeById } from '../features/recipes/recipes-slice';
 import { useParams } from 'react-router-dom';
+import '../styles/recipe-detail.css';
 import '../styles/recipe.css';
 
 const RecipeDetail = () => {
@@ -29,6 +30,7 @@ const RecipeDetail = () => {
   }
 
   return (
+    <section className='recipe-detail-section'>
     <div className='recipe-section'>
     <h2 className='recipe-title'>{recipe.title}</h2>
     {recipe.image && <img className='recipe-image' src={recipe.image} alt={recipe.title} />}
@@ -55,6 +57,7 @@ const RecipeDetail = () => {
     <p className='recipe-attributes'><strong>Tags:</strong>{recipe.tags}</p>
     <p className='recipe-attributes'><strong>Rating:</strong>{recipe.rating}</p>
   </div>
+    </section>
   );
 };
 

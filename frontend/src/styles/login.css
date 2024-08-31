@@ -1,16 +1,26 @@
+.login{
+    display: flex;
+    width: 100%;
+    background: url('../images/login.svg');
+    background-size: cover; /* Resmin tüm alanı kaplaması için */
+    background-position: center; /* Resmi ortalamak için */
+    min-height: 100vh;
+    position: absolute;
+    top: 0;
+}
 .login-container{
     display: flex;
     flex-direction: column;
-    width: 30%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10%;
+    padding-top: 14%;
+
 }
 .login-form{
     display: flex;
     flex-direction: column;
     padding: 30px;
-    background:radial-gradient(circle,#b1b1b150,#ffffff);
+    background:radial-gradient(circle,#b1b1b150,#acacac);
     box-shadow: 1px 1px 10px rgb(165, 165, 165);
     border-radius: 20px;
 }
@@ -19,13 +29,14 @@
     font-size: 24px;
     font-weight: bold;
     letter-spacing: 2px;
-    color: black;
+    color: rgb(255, 255, 255);
     margin-top: 0;
-    border-bottom: 1px solid #00000020;
+    border-bottom: 1px solid #ffffff20;
 }
 .login-input{
     border: none;
     padding:20px;
+    width: 200px;
     margin-bottom: 10px;
     border-radius: 20px;
 }
@@ -39,4 +50,8 @@
     font-weight: bold;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease-out;
+}
+.login-button:hover{
+    background-color: rgb(0, 149, 0);
 }

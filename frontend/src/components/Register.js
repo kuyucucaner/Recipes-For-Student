@@ -38,6 +38,7 @@ const Register = () => {
   };
 
   return (
+    <section className='register'>
     <div className='register-container'>
     <form onSubmit={onSubmit} className='register-form'>
       <h3 className='register-title'>Register Form</h3>
@@ -52,6 +53,7 @@ const Register = () => {
       <button className='register-button' type="submit">Register</button>
     </form>
     </div>
+    </section>
   );
 };
 

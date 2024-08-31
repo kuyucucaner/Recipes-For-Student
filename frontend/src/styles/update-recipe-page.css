@@ -1,9 +1,17 @@
+.update-recipe{
+    display: flex;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    background-color: #39363a;
+    min-height: 100vh;
+}
 .update-recipe-container{
     display: flex;
     flex-direction: column;
     margin-left: auto;
     margin-right: auto;
     width: 45%;
-    margin-top: 2em;
+    margin-top: 5em;
     margin-bottom: 5em;
 }

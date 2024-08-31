@@ -44,18 +44,18 @@ const Navbar = () => {
       </div>
       <div className='navbar-right-section'>
       <h4 className='navbar-link'><Link className='navbar-link-direction' to="/recipe-list">List of Recipes</Link></h4>
-      {(role === 0 || role === 2 || role === 1) && (
-        <h4 className='navbar-link'><Link className='navbar-link-direction' to="/profile">profile</Link></h4>
-      )} 
       {(role === 0 || role === 2) && (
         <h4 className='navbar-link'><Link className='navbar-link-direction' to="/add-recipe">Add Recipe</Link></h4>
       )}
+      {(role === 0 || role === 2 || role === 1) && (
+        <h4 className='navbar-link'><Link className='navbar-link-direction' to="/profile">profile</Link></h4>
+      )} 
        {role !== null ? (
         <button className='navbar-button' onClick={handleLogout}>Logout</button>
       ) : (
         <>
-          <h4 className='navbar-link'><Link className='navbar-link-direction' to="/login">Login</Link></h4>
           <h4 className='navbar-link'><Link className='navbar-link-direction' to="/register">Register</Link></h4>
+          <h4 className='navbar-link'><Link className='navbar-link-direction' to="/login">Login</Link></h4>
         </>
       )}
       </div>
