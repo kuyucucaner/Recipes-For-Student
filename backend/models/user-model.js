@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
     required: true,
     enum: [0, 1, 2]  // Sadece bu değerler kabul edilecek
   },
+  bio: {
+    type: String,
+    default: null
+  },
   isVerified: {
     type: Boolean,
     required: true,
@@ -36,8 +40,16 @@ const UserSchema = new mongoose.Schema({
     default: null
   },
   favoriteRecipes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+  viewedRecipes: [{type: mongoose.Schema.Types.ObjectId, ref:'Recipe'}],
+  searchHistory: [String],
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
 
-}, {
+},
+
+
+
+{
   timestamps: true
 });
 

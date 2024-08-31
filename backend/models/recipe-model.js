@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const RecipeSchema = new mongoose.Schema({
   title: {
@@ -36,21 +36,21 @@ const RecipeSchema = new mongoose.Schema({
   nutrition: {
     calories: {
       type: Number,
-      required: true, // Tarifin kalori miktarı
+      required: false,
     },
     protein: {
-      type: Number, // Gram cinsinden
-      required: true, // Tarifin protein miktarı
+      type: Number,
+      required: false,
     },
     fat: {
-      type: Number, // Gram cinsinden
-      required: true, // Tarifin yağ miktarı
+      type: Number,
+      required: false,
     },
     carbohydrates: {
-      type: Number, // Gram cinsinden
-      required: true, // Tarifin karbonhidrat miktarı
+      type: Number,
+      required: false,
     },
-  },
+  },  
   author: {
     type: String,
     required: true, // Tarifi oluşturan kişi veya kaynağın adı
@@ -63,6 +63,8 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     required: true, // Tarifin bir resmi
   },
+  videoUrl: { type: String, required: true }, // Video URL alanı
+
   notes: {
     type: String, // Ekstra bilgiler veya öneriler
   },
@@ -72,14 +74,13 @@ const RecipeSchema = new mongoose.Schema({
   reviews: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Review',
+      ref: "Review",
     },
   ],
   averageRating: {
     type: Number,
     default: 0,
   },
-
 });
 
-module.exports = mongoose.model('Recipe', RecipeSchema);
+module.exports = mongoose.model("Recipe", RecipeSchema);

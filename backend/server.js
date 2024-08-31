@@ -9,13 +9,21 @@ const recipeRoutes = require('./routes/recipe-routes');
 const authRoutes = require('./routes/auth-routes');
 const mailRoutes = require('./routes/mail-routes');
 const reviewRoutes = require('./routes/review-routes');
+const storageRoutes = require('./routes/storage-routes');
+const recommendRoutes = require('./routes/recommend-routes');
+const followerRoutes = require('./routes/follower-routes');
+const postRoutes = require('./routes/post-routes');
+const likeRoutes = require('./routes/like-routes');
+const mealRoutes = require('./routes/meal-routes');
+const shoppingRoutes = require('./routes/shopping-routes');
 require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 
-
 const app = express();
+
 // Middleware
+app.use(express.static('public'));
 app.use(cookieParser()); // Add this line
 app.use(express.json());
 app.use(helmet());
@@ -33,7 +41,6 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
 const swaggerOptions = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -52,9 +59,24 @@ const swaggerOptions = {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
-          bearerFormat: 'JWT', // Bu isteğe bağlı, ancak JSON Web Token kullanıyorsanız eklemek iyi bir fikirdir
+          bearerFormat: 'JWT',
         },
       },
+      schemas: {
+        ErrorResponse: {
+          type: 'object',
+          properties: {
+            msg: {
+              type: 'string',
+              example: 'Error message'
+            },
+            error: {
+              type: 'string',
+              example: 'Detailed error message'
+            }
+          }
+        }
+      }
     },
     security: [
       {
@@ -64,14 +86,23 @@ const swaggerOptions = {
   },
   apis: ['./routes/*.js'], // Yolları kontrol edin
 };
+
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 // Routes
 app.use('/api/users', authRoutes);
 app.use('/api/recipes', recipeRoutes);
 app.use('/api/mails', mailRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/storage', storageRoutes);
+app.use('/api/recommend', recommendRoutes);
+app.use('/api/follower', followerRoutes);
+app.use('/api/post', postRoutes);
+app.use('/api/like', likeRoutes);
+app.use('/api/meal', mealRoutes);
+app.use('/api/shopping', shoppingRoutes);
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
