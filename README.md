@@ -1,7 +1,7 @@
 # 🍽️ Recipes for Student
 
 **Recipes for Student** is a full-stack recipe management platform tailored for students.  
-It offers user authentication, recipe sharing, interaction features, and shopping list capabilities.  
+It offers user authentication, recipe sharing, interaction features, and shopping list capabilities.   
 Only registered users can navigate and access the application features.
 
 ---
